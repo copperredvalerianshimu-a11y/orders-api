@@ -61,7 +61,7 @@ app.get('/orders', (req: Request, res: Response) => {
   }>;
 
   if (orders.length === 0) {
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.floor(total / limit);
     res.json({
       data: [],
       page,
@@ -112,7 +112,7 @@ app.get('/orders', (req: Request, res: Response) => {
     items: itemsMap.get(order.id) || []
   }));
 
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = Math.floor(total / limit);
 
   res.json({
     data: enrichedOrders,
