@@ -1,0 +1,32 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs: 
+    build-and-test:
+        runs-on: ubuntu-latest
+
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 20
+                cache: npm
+
+            - run: npm ci
+
+            - run: npm run typecheck
+
+            - run: docker compose up --build -d
+
+            - name: wait for api to be healthy
+              run: timeout 60 bash -c 'until curl -sf localhost:3000/health; do sleep 1; done'
+
+            - name: check orders list perfomance
+              run: ./bench/perf-check.sh
+
+            - name: stop the container
+              if: always()
+              run: docker compose down

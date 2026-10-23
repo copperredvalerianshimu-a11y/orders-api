@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PERF_THRESHOLD_MS="${PERF_THRESHOLD_MS:-1200}"
+PERF_THRESHOLD_MS="${PERF_THRESHOLD_MS:-200}"
 RUN_COUNT=5
 TARGET_ENDPOINT="/orders?page=1&limit=20"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
