@@ -41,6 +41,7 @@ app.get('/orders', (req: Request, res: Response) => {
 
   // Top line items for the dashboard header
   let topItems: unknown[] = [];
+  topItems = db.prepare('SELECT * FROM order_items oi JOIN products p ON p.id = oi.product_id ORDER BY oi.unit_price_cents DESC').all().slice(0,5)
   
 
   const ordersStmt = db.prepare(`
